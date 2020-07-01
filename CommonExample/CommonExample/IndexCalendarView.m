@@ -49,10 +49,10 @@
     self.holidayLabel.text = @"七月1日建党日";
     self.dayLabel.text = @"28";
     self.descLabel.text = @"风景都是一样的，因为风景中最要紧的事距离和空气。";
-    [self setUIFrame];
+    [self setUIFrame:YES];
 }
 
-- (void)setUIFrame
+- (void)setUIFrame:(BOOL)load
 {
     NSAttributedString *weekdayAttText = [self weekDayAttributedStringWithString:self.weekdayLabel.text otherString:@"S A T U R D A Y"];
     NSAttributedString *holidayAttText =[self attributedStringWithString:self.holidayLabel.text font:[UIFont systemFontOfSize:self.textFontSize-2] textColor:[UIColor yellowColor]];
@@ -75,17 +75,18 @@
     CGSize daySize = [self dynamicCalculationLabelHightText:dayText width:200];
     CGSize desLSize = [self dynamicCalculationLabelHightText:desLAttText width:[UIScreen mainScreen].bounds.size.width-100];
     
-    
-    self.weekdayLabel.frame = CGRectMake((self.width-30-weekdaySize.width)/2, 50,  weekdaySize.width, weekdaySize.height);
-    
-    self.holidayLabel.frame = CGRectMake((self.width-30-holidaySize.width)/2, self.weekdayLabel.bottom+20, holidaySize.width, holidaySize.height);
-    
-    self.dayLabel.frame = CGRectMake( (self.width-30-daySize.width)/2, self.holidayLabel.bottom+20, daySize.width,  daySize.height);
-
-    self.descLabel.frame = CGRectMake(50, self.dayLabel.bottom+20, self.width-30-100,  desLSize.height);
-    
-    self.oldDayY = self.dayLabel.top;
-    self.oldDayX = self.dayLabel.left;
+    [UIView animateWithDuration:(!load?0:0.3) animations:^{
+        self.weekdayLabel.frame = CGRectMake((self.width-30-weekdaySize.width)/2, 50,  weekdaySize.width, weekdaySize.height);
+        
+        self.holidayLabel.frame = CGRectMake((self.width-30-holidaySize.width)/2, self.weekdayLabel.bottom+20, holidaySize.width, holidaySize.height);
+        
+        self.dayLabel.frame = CGRectMake( (self.width-30-daySize.width)/2, self.holidayLabel.bottom+20, daySize.width,  daySize.height);
+        
+        self.descLabel.frame = CGRectMake(50, self.dayLabel.bottom+20, self.width-30-100,  desLSize.height);
+        
+        self.oldDayY = self.dayLabel.top;
+        self.oldDayX = self.dayLabel.left;
+    }];
 }
 
 #pragma mark - Lazy
@@ -146,7 +147,7 @@
 {
     if(self.baseScrollView.contentOffset.y <= 0)
     {
-        [self setUIFrame];
+        [self setUIFrame:NO];
     }else
     {
         CGPoint point = [self.baseScrollView.panGestureRecognizer translationInView:self.baseScrollView];
