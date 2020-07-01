@@ -17,6 +17,7 @@
 		A8D285C1246E341200B9C604 /* ZLCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D285BF246E340C00B9C604 /* ZLCommon.framework */; };
 		A8D285C2246E341200B9C604 /* ZLCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A8D285BF246E340C00B9C604 /* ZLCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A8D285CA246E37FA00B9C604 /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8D285C9246E37FA00B9C604 /* TestView.m */; };
+		EBB9E72D24ACB86300FF9B1F /* IndexCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB9E72C24ACB86300FF9B1F /* IndexCalendarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		A8D285BA246E340C00B9C604 /* ZLCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZLCommon.xcodeproj; path = ZLCommon/ZLCommon.xcodeproj; sourceTree = "<group>"; };
 		A8D285C8246E37FA00B9C604 /* TestView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
 		A8D285C9246E37FA00B9C604 /* TestView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestView.m; sourceTree = "<group>"; };
+		EBB9E72B24ACB86300FF9B1F /* IndexCalendarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IndexCalendarView.h; sourceTree = "<group>"; };
+		EBB9E72C24ACB86300FF9B1F /* IndexCalendarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IndexCalendarView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,8 @@
 				A8D285B3246E33D800B9C604 /* main.m */,
 				A8D285C8246E37FA00B9C604 /* TestView.h */,
 				A8D285C9246E37FA00B9C604 /* TestView.m */,
+				EBB9E72B24ACB86300FF9B1F /* IndexCalendarView.h */,
+				EBB9E72C24ACB86300FF9B1F /* IndexCalendarView.m */,
 			);
 			path = CommonExample;
 			sourceTree = "<group>";
@@ -216,6 +221,7 @@
 				A8D285A9246E33D700B9C604 /* ViewController.m in Sources */,
 				A8D285A3246E33D700B9C604 /* AppDelegate.m in Sources */,
 				A8D285CA246E37FA00B9C604 /* TestView.m in Sources */,
+				EBB9E72D24ACB86300FF9B1F /* IndexCalendarView.m in Sources */,
 				A8D285B4246E33D800B9C604 /* main.m in Sources */,
 				A8D285A6246E33D700B9C604 /* SceneDelegate.m in Sources */,
 			);
@@ -358,9 +364,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PZ484C7FT3;
+				DEVELOPMENT_TEAM = DL6GUGSRAT;
 				INFOPLIST_FILE = CommonExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -368,7 +374,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = lixi.text.CommonExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -377,9 +383,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = PZ484C7FT3;
+				DEVELOPMENT_TEAM = DL6GUGSRAT;
 				INFOPLIST_FILE = CommonExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,7 +393,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = lixi.text.CommonExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
