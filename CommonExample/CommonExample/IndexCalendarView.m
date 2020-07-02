@@ -63,27 +63,17 @@
     self.holidayLabel.attributedText = holidayAttText;
     self.dayLabel.attributedText = dayText;
     self.descLabel.attributedText = desLAttText;
-    [self setNeedsLayout];
-    
-    self.weekdayLabel.backgroundColor =[ [UIColor blueColor] colorWithAlphaComponent:0.1];
-    self.holidayLabel.backgroundColor =[ [UIColor blueColor] colorWithAlphaComponent:0.1];
-    self.dayLabel.backgroundColor =[ [UIColor blueColor] colorWithAlphaComponent:0.1];
-    self.descLabel.backgroundColor =[ [UIColor blueColor] colorWithAlphaComponent:0.1];
     
     CGSize weekdaySize = [self dynamicCalculationLabelHightText:weekdayAttText width:200];
     CGSize holidaySize = [self dynamicCalculationLabelHightText:holidayAttText width:200];
     CGSize daySize = [self dynamicCalculationLabelHightText:dayText width:200];
     CGSize desLSize = [self dynamicCalculationLabelHightText:desLAttText width:[UIScreen mainScreen].bounds.size.width-100];
     
-    [UIView animateWithDuration:(!load?0:0.3) animations:^{
+    [UIView animateWithDuration:(!load?0:0.1) animations:^{
         self.weekdayLabel.frame = CGRectMake((self.width-30-weekdaySize.width)/2, 50,  weekdaySize.width, weekdaySize.height);
-        
         self.holidayLabel.frame = CGRectMake((self.width-30-holidaySize.width)/2, self.weekdayLabel.bottom+20, holidaySize.width, holidaySize.height);
-        
         self.dayLabel.frame = CGRectMake( (self.width-30-daySize.width)/2, self.holidayLabel.bottom+20, daySize.width,  daySize.height);
-        
         self.descLabel.frame = CGRectMake(50, self.dayLabel.bottom+20, self.width-30-100,  desLSize.height);
-        
         self.oldDayY = self.dayLabel.top;
         self.oldDayX = self.dayLabel.left;
     }];
@@ -150,82 +140,54 @@
         [self setUIFrame:NO];
     }else
     {
-        CGPoint point = [self.baseScrollView.panGestureRecognizer translationInView:self.baseScrollView];
-        CGFloat offsetY = point.y;
-        
-        CGFloat benchmarkHeight = 50.f;
-        CGFloat currentOffset = benchmarkHeight - self.baseScrollView.contentOffset.y;
-        CGFloat alpha = currentOffset / benchmarkHeight;
-        CGFloat resultAlpha = (alpha <= 0.5 ? 0.5 : alpha);
-        NSAttributedString *weekdayAttText = [self weekDayAttributedStringWithString:self.weekdayLabel.text otherString:@"S A T U R D A Y"];
-        NSAttributedString *holidayAttText =[self attributedStringWithString:self.holidayLabel.text font:[UIFont systemFontOfSize:self.textFontSize-2] textColor:[UIColor yellowColor]];
-        
-        
-        CGSize weekdaySize = [self dynamicCalculationLabelHightText:weekdayAttText width:200];
-        CGSize holidaySize = [self dynamicCalculationLabelHightText:holidayAttText width:200];
-        
-        
+        CGFloat benchmarkHeight = 40.f;
         CGFloat weekDayleft = (self.weekdayLabel.left-self.baseScrollView.contentOffset.y) <= 15?15:(self.weekdayLabel.left-self.baseScrollView.contentOffset.y);
-        
-        if (offsetY > 0) {
+        [UIView animateWithDuration:0.1 animations:^{
             
-            NSLog(@"下滑");
-            
-            
-            
-        }
-        
-        
-      
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            
-            self.weekdayLabel.frame = CGRectMake(weekDayleft , 50, weekdaySize.width, weekdaySize.height);
-            
-           // CGFloat holiLabelTop = (self.holidayLabel.top-self.baseScrollView.contentOffset.y) <= self.weekdayLabel.top?self.weekdayLabel.top:(self.holidayLabel.top-self.baseScrollView.contentOffset.y);
+            self.weekdayLabel.frame = CGRectMake(weekDayleft , 50, self.weekdayLabel.width, self.weekdayLabel.height);
+            // CGFloat holiLabelTop = (self.holidayLabel.top-self.baseScrollView.contentOffset.y) <= self.weekdayLabel.top?self.weekdayLabel.top:(self.holidayLabel.top-self.baseScrollView.contentOffset.y);
             CGFloat holiLabelTop = (self.holidayLabel.top-self.baseScrollView.contentOffset.y) <= self.weekdayLabel.centerY-self.holidayLabel.height/2.f?self.weekdayLabel.centerY-self.holidayLabel.height/2.f:(self.holidayLabel.top-self.baseScrollView.contentOffset.y);
-            
             CGFloat holiLabelLeft = (self.holidayLabel.left+self.baseScrollView.contentOffset.y) >= (self.weekdayLabel.right+10)?(self.weekdayLabel.right+10):(self.holidayLabel.left+self.baseScrollView.contentOffset.y);
             
-            self.holidayLabel.frame = CGRectMake(holiLabelLeft, holiLabelTop, holidaySize.width, holidaySize.height);
+            self.holidayLabel.frame = CGRectMake(holiLabelLeft, holiLabelTop, self.holidayLabel.width, self.holidayLabel.height);
             
-            CGFloat padding = self.oldDayY-self.weekdayLabel.bottom+20;
+            CGFloat padding = self.oldDayX-15;
+            CGFloat paddingH = self.oldDayY-self.weekdayLabel.bottom+20;
+            CGFloat off = (self.baseScrollView.contentOffset.y>=benchmarkHeight?benchmarkHeight:self.baseScrollView.contentOffset.y);
+            CGFloat proportion = (padding-off*(padding/benchmarkHeight))/padding;
+            CGFloat resultAlpha = (proportion <= 0.5 ? 0.5 : proportion);
             
-            CGFloat fontSize = self.minFontSize + (self.maxFontSize-self.minFontSize)*((self.dayLabel.top-padding)/(self.maxFontSize - self.minFontSize)) ;
-            if(fontSize >= self.maxFontSize)
-            {
-                fontSize = self.maxFontSize;
-            }
+            CGFloat fontSize = self.minFontSize + (self.maxFontSize-self.minFontSize)*proportion;
             
             UIFont *dayfont =  [UIFont systemFontOfSize:fontSize];
             UIColor *textColor = [[UIColor blackColor] colorWithAlphaComponent:resultAlpha];
             
             NSAttributedString *dayText = [self attributedStringWithString:self.dayLabel.text font:dayfont textColor:textColor];
             NSAttributedString *desLAttText = [self desLAttributedStringWithString:self.descLabel.text lineSpace:5 font:[UIFont systemFontOfSize:self.textFontSize] textColor:textColor];
-            self.dayLabel.attributedText = dayText;
-            self.descLabel.attributedText = desLAttText;
+            
             CGSize daySize = [self dynamicCalculationLabelHightText:dayText width:200];
             CGSize desLSize = [self dynamicCalculationLabelHightText:desLAttText width:[UIScreen mainScreen].bounds.size.width-100];
             
-            CGFloat dayLableTop = (self.dayLabel.top-self.weekdayLabel.bottom+20) <= (self.holidayLabel.bottom+20)?(self.holidayLabel.bottom+20):(self.dayLabel.top-self.weekdayLabel.bottom+20);
-            CGFloat dayLabelLeft =  (self.dayLabel.left-self.baseScrollView.contentOffset.y)/padding;
-            if(dayLabelLeft <= 15)
-            {
-                dayLabelLeft = 15;
-            }
+            CGFloat dayLableTop = ((self.weekdayLabel.bottom+20+proportion*paddingH) >=self.oldDayY?self.oldDayY:(self.weekdayLabel.bottom+20+proportion*paddingH)) ;
+            CGFloat dayLabelLeft = 15 + padding*proportion;
             
-            
-            self.dayLabel.frame = CGRectMake(dayLabelLeft, dayLableTop,  daySize.width,  daySize.height);
+            self.dayLabel.frame = CGRectMake(dayLabelLeft, dayLableTop, daySize.width, daySize.height);
             
             CGFloat desLabelLeft = (self.descLabel.left-self.baseScrollView.contentOffset.y) <= 15?15:(self.descLabel.left-self.baseScrollView.contentOffset.y);
-            
             self.descLabel.frame = CGRectMake(desLabelLeft, self.dayLabel.bottom+20,  self.width-30-100,  desLSize.height);
+            
+            self.dayLabel.attributedText = dayText;
+            self.descLabel.attributedText = desLAttText;
+        } completion:^(BOOL finished) {
+            if(finished)
+            {
+                self.height = self.descLabel.bottom+50;
+                if(self.updateBlock)
+                {
+                    self.updateBlock(0);
+                }
+            }
         }];
-        
-        if(self.updateBlock)
-        {
-            self.updateBlock(self.baseScrollView.contentOffset.y);
-        }
     }
 }
 

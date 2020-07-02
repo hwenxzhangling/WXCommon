@@ -38,6 +38,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.contentInset = UIEdgeInsetsMake(88, 0, 0, 0);
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:self.tableView];
     
@@ -46,11 +47,11 @@
     self.headerView.frame = CGRectMake(0, 0, self.tableView.width, 320);
     self.headerView.baseScrollView = self.tableView;
     self.tableView.tableHeaderView = self.headerView;
-    self.headerView.backgroundColor = [[UIColor brownColor] colorWithAlphaComponent:0.3];
+    //self.headerView.backgroundColor = [[UIColor brownColor] colorWithAlphaComponent:0.3];
     
     __weak typeof(self) ws = self;
     self.headerView.updateBlock = ^(CGFloat y) {
-        ws.headerView.frame = CGRectMake(0, 0, ws.tableView.width, (320-y <= 0 ? 0 : 320-y ));
+        //ws.headerView.frame = CGRectMake(0, 0, ws.tableView.width, 320-y);
         ws.tableView.tableHeaderView = ws.headerView;
     };
     NSLog(@"fff:%@",NSStringFromCGRect(self.headerView.frame));
